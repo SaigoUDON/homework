@@ -255,3 +255,40 @@ def divide(body_file,order,quotient):#配列をquotientこに分割して1個と
 				rest_data.append(i)
 			count+=1
 	return [extract_data,rest_data]
+
+def calc_cos(tfidf_a,tfidf_b):
+	cos = 0.0
+	a = 0.0#aベクトルの値をいれる変数
+	b = 0.0#bベクトルの値をいれる変数
+	ab = 0.0#a*bベクトルの値をいれる変数
+	commona = {}
+	commonb = {}
+	for aword in tfidf_a.keys():
+		# print "tfidf_a",aword,tfidf_a[aword]
+		if tfidf_a[aword] != 0.0:
+			a += tfidf_a[aword] * tfidf_a[aword]
+		# print a
+		if aword in tfidf_b.keys():
+			commona[aword] = tfidf_a[aword]
+	a = math.sqrt(a)
+	# print a
+	for bword in tfidf_b.keys():
+		# print "tfidf_b",bword,tfidf_b[bword]
+		if tfidf_b[bword] != 0.0:
+			b += tfidf_b[bword] * tfidf_b[bword]
+		if bword in tfidf_a.keys():
+			commonb[bword] = tfidf_b[bword]
+	b = math.sqrt(b)
+	# print b
+	# print "common_A", commona
+	# print "common_B", commonb
+	for co_a in tfidf_a.keys():
+		if co_a in tfidf_b.keys():
+				ab += tfidf_a[co_a] * tfidf_b[co_a]
+				# print ab, co_a
+	# print "a", a, "b", b
+	# print "ab", ab
+	cos = a * b
+	cos = ab / cos
+	# print "cos尺度", cos
+	return cos
